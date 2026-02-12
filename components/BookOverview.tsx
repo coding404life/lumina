@@ -6,6 +6,7 @@ interface Props extends Book {
   userId: string;
   totalCopies: number;
   availableCopies: number;
+  video: string;
 }
 
 const BookOverview = ({

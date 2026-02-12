@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/noUnusedVariables: false positive */
 interface Book {
   id: string;
   title: string;

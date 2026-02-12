@@ -18,7 +18,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
       <section className="auth-illustration">
         <Image
-          src="/images/auth-illustration.png"
+          src="/images/auth-illustration3.png"
           alt="auth illustration"
           height={1000}
           width={1000}
