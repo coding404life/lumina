@@ -1,5 +1,15 @@
-const page = () => {
-  return <div>page</div>;
-};
+"use client";
 
-export default page;
+import AuthForm from "@/components/AuthForm";
+import { signInSchema } from "@/lib/validations";
+
+const SignInPage = () => (
+  <AuthForm
+    type="SIGN_IN"
+    schema={signInSchema}
+    defaultValues={{ email: "", password: "" }}
+    onSubmit={async (data) => ({ success: true })}
+  />
+);
+
+export default SignInPage;
