@@ -13,6 +13,7 @@ import {
 import config from "@/lib/config";
 import { useRef, useState } from "react";
 import Image from "next/image";
+import { toast } from "sonner";
 
 const {
   env: {
@@ -72,6 +73,9 @@ const ImageUpload = ({ onFileChange, defaultValue }: Props) => {
       });
 
       if (uploadResponse.filePath) {
+        toast.success("Image uploaded successfully", {
+          position: "top-right",
+        });
         setFile({ filePath: uploadResponse.filePath });
         onFileChange(uploadResponse.filePath);
       }
