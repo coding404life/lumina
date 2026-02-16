@@ -17,8 +17,5 @@
     "parser": {
       "tailwindDirectives": true
     }
-  },
-  "organizeImports": {
-    "enabled": false
   }
 }

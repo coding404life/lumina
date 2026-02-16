@@ -7,7 +7,7 @@ import type {
   SubmitHandler,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ZodType } from "zod";
+import type { ZodType } from "zod";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -57,8 +57,14 @@ const AuthForm = <T extends FieldValues>({
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-semibold text-white">{isSignIn ? "Welcome to Knowledge" : "Create your library account"}</h1>
-      <p className="text-light-100">{isSignIn ? "Access the vast collection of resources, and stay updated" : "Please complete the form below to create your account"}</p>
+      <h1 className="text-2xl font-semibold text-white">
+        {isSignIn ? "Welcome to Knowledge" : "Create your library account"}
+      </h1>
+      <p className="text-light-100">
+        {isSignIn
+          ? "Access the vast collection of resources, and stay updated"
+          : "Please complete the form below to create your account"}
+      </p>
       <Card className="w-full sm:max-w-md">
         <CardHeader>
           <CardTitle>{isSignIn ? "Sign In" : "Sign Up"}</CardTitle>
@@ -70,9 +76,12 @@ const AuthForm = <T extends FieldValues>({
         </CardHeader>
 
         <CardContent>
-          <form id="auth-form" onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 w-full">
+          <form
+            id="auth-form"
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-6 w-full"
+          >
             <FieldGroup>
-
               {Object.keys(defaultValues).map((key) => (
                 <Controller
                   key={key}
@@ -80,16 +89,23 @@ const AuthForm = <T extends FieldValues>({
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel className="capitalize" htmlFor={key}>{FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}</FieldLabel>
+                      <FieldLabel className="capitalize" htmlFor={key}>
+                        {FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}
+                      </FieldLabel>
                       {field.name === "universityCard" ? (
-                        <ImageUpload />
+                        <ImageUpload
+                          onFileChange={field.onChange}
+                          defaultValue={field.value}
+                        />
                       ) : (
                         <Input
-                        required
+                          required
                           {...field}
                           id={key}
                           aria-invalid={fieldState.invalid}
-                          type={FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]}
+                          type={
+                            FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]
+                          }
                           className="form-input"
                         />
                       )}
@@ -100,10 +116,9 @@ const AuthForm = <T extends FieldValues>({
                   )}
                 />
               ))}
-
             </FieldGroup>
           </form>
-         </CardContent>
+        </CardContent>
 
         <CardFooter className="flex flex-col gap-4">
           <Button type="submit" form="auth-form" className="form-btn">
