@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1771222298587,
+      "tag": "0000_classy_pestilence",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1771260817670,
+      "tag": "0001_big_makkari",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1771266105303,
+      "tag": "0002_broken_hannibal_king",
+      "breakpoints": true
+    }
+  ]
+}
