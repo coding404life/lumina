@@ -11,7 +11,12 @@ const BookList = ({ title, books, containerClassName }: BookListProps) => {
 
   return (
     <section className={containerClassName}>
-      <h2 className="font-bebas-neue text-4xl text-light-100">{title}</h2>
+      <div className="flex flex-col gap-2 mb-8 sm:mb-10">
+        <h2 className="font-bebas-neue text-3xl sm:text-5xl text-white tracking-widest text-glow">
+          {title}
+        </h2>
+        <div className="w-12 sm:w-20 h-1 bg-primary rounded-full" />
+      </div>
 
       <ul className="book-list">
         {books.map((book) => (

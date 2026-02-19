@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { cn, getInitials } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { signOut } from "next-auth/react";
 import { Avatar, AvatarFallback } from "./ui/avatar";
@@ -13,40 +13,64 @@ const Header = ({ session }: { session: Session }) => {
   const pathname = usePathname();
 
   return (
-    <header className="my-10 flex justify-between gap-5">
+    <header className="glass-morphism mt-5 flex justify-between items-center gap-5 px-6 py-3 rounded-2xl shadow-2xl">
       <Link href="/">
-        <Image src="/icons/logo.svg" alt="logo" width={40} height={40} />
+        <div className="flex items-center gap-2">
+          <Image src="/icons/logo.svg" alt="logo" width={32} height={32} />
+          <span className="font-bebas-neue text-2xl text-white tracking-widest hidden sm:block">
+            KNOWLEDGE
+          </span>
+        </div>
       </Link>
 
-      <ul className="flex flex-row items-center gap-8">
-        <li>
+      <div className="flex items-center gap-4 sm:gap-10">
+        <ul className="flex flex-row items-center gap-4 sm:gap-8">
+          <li>
+            <Link
+              href="/library"
+              className={cn(
+                "text-sm font-medium transition-all hover:text-primary",
+                pathname === "/library"
+                  ? "text-primary text-glow"
+                  : "text-light-100",
+              )}
+            >
+              Library
+            </Link>
+          </li>
+        </ul>
+
+        <div className="flex items-center gap-2 sm:gap-4 border-l border-white/10 pl-4 sm:pl-10">
           <Link
-            href="/library"
-            className={cn(
-              "text-base cursor-pointer capitalize",
-              pathname === "/library" ? "text-light-200" : "text-light-100",
-            )}
+            href="/my-profile"
+            className="flex items-center gap-2 text-white"
           >
-            Library
-          </Link>
-        </li>
-
-        <li>
-          <Button onClick={() => signOut()} className="cursor-pointer">
-            Sign Out
-          </Button>
-        </li>
-
-        <li>
-          <Link href="/my-profile">
-            <Avatar>
-              <AvatarFallback className="text-white bg-primary">
-                {session.user?.name?.charAt(0)}
+            <Avatar className="size-8 sm:size-9 ring-2 ring-primary/20 transition-all hover:ring-primary/50">
+              <AvatarFallback className="bg-amber-100 text-dark-100 font-bold text-xs sm:text-base">
+                {getInitials(session.user?.name || "IN")}
               </AvatarFallback>
             </Avatar>
+            <span className="text-light-100 text-sm font-medium hidden lg:block">
+              {session.user?.name}
+            </span>
           </Link>
-        </li>
-      </ul>
+
+          <Button
+            onClick={() => signOut()}
+            variant="ghost"
+            className="group text-light-100 hover:text-white hover:bg-white/5 transition-all size-9 p-0 md:w-auto md:h-9 md:px-3 flex items-center justify-center gap-2"
+          >
+            <Image
+              src="/icons/logout.svg"
+              alt="logout"
+              width={20}
+              height={20}
+              className="md:hidden opacity-70 group-hover:opacity-100"
+            />
+            <span className="hidden md:block">Sign Out</span>
+          </Button>
+        </div>
+      </div>
     </header>
   );
 };

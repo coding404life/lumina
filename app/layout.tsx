@@ -24,9 +24,9 @@ const bebasNeue = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Book Knowledge",
+  title: "Knowledge | Digital Library Management",
   description:
-    "book knowledge is a book borrowing university library management solution",
+    "A premium digital library management solution for the modern age.",
 };
 
 export default async function RootLayout({

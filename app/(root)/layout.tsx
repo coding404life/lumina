@@ -11,10 +11,14 @@ const layout = async ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <main className="root-container">
+    <main className="root-container relative overflow-hidden">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-primary/5 blur-[120px] rounded-full -z-10" />
+
       <div className="mx-auto max-w-7xl">
-        <Header session={session} />
-        <div className="mt-20 pb-20">{children}</div>
+        <div className="sticky top-0 z-50 transition-all duration-300">
+          <Header session={session} />
+        </div>
+        <div className="mt-10 pb-20">{children}</div>
       </div>
     </main>
   );
