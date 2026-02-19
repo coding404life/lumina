@@ -27,10 +27,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
 import ImageUpload from "./ImageUpload";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface Props<T extends FieldValues> {
   type: "SIGN_IN" | "SIGN_UP";
-  schema: ZodType<T, any>;
+  schema: ZodType<T, any, any>;
   defaultValues: T;
   onSubmit: (data: T) => Promise<{ success: boolean; error?: string }>;
 }
@@ -41,6 +43,7 @@ const AuthForm = <T extends FieldValues>({
   defaultValues,
   onSubmit,
 }: Props<T>) => {
+  const router = useRouter();
   const isSignIn = type === "SIGN_IN";
 
   const form = useForm<T>({
@@ -50,8 +53,17 @@ const AuthForm = <T extends FieldValues>({
 
   const handleSubmit: SubmitHandler<T> = async (data) => {
     const result = await onSubmit(data);
-    if (!result.success && result.error) {
-      console.error(result.error);
+
+    if (result.success) {
+      toast.success(
+        isSignIn ? "Signed in successfully" : "Account created successfully",
+      );
+
+      router.push("/");
+    } else {
+      toast.error(result.error || "Something went wrong", {
+        description: "Please check your credentials and try again",
+      });
     }
   };
 
@@ -121,7 +133,11 @@ const AuthForm = <T extends FieldValues>({
         </CardContent>
 
         <CardFooter className="flex flex-col gap-4">
-          <Button type="submit" form="auth-form" className="form-btn">
+          <Button
+            type="submit"
+            form="auth-form"
+            className="form-btn cursor-pointer"
+          >
             {isSignIn ? "Sign In" : "Sign Up"}
           </Button>
           <p className="text-sm text-center text-muted-foreground">

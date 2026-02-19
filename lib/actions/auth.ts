@@ -1,0 +1,68 @@
+"use server";
+
+import { users } from "@/database/schema";
+import { eq } from "drizzle-orm";
+import { db } from "@/database/db";
+import bcrypt from "bcryptjs";
+import { signIn } from "@/auth";
+
+export const signUp = async (params: AuthCredentials) => {
+  const { email, password, fullName, universityId, universityCard } = params;
+
+  // check if user already exists
+  const existingUser = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
+
+  if (existingUser.length > 0) {
+    return { success: false, message: "User already exists" };
+  }
+
+  // hash password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  try {
+    // create user
+    await db.insert(users).values({
+      email,
+      password: hashedPassword,
+      fullName,
+      universityId,
+      universityCard,
+    });
+
+    await signInWithCredentials({ email, password });
+
+    return { success: true };
+  } catch (error) {
+    // biome-ignore lint/suspicious/noConsole: false positive
+    console.log(error, "Signup error");
+    return { success: false, message: "Failed to create user" };
+  }
+};
+
+export const signInWithCredentials = async (
+  params: Pick<AuthCredentials, "email" | "password">,
+) => {
+  const { email, password } = params;
+
+  try {
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      return { success: false, error: result.error };
+    }
+
+    return { success: true };
+  } catch (error) {
+    // biome-ignore lint/suspicious/noConsole: false positive
+    console.log(error, "Signin error");
+    return { success: false, error: "Something went wrong" };
+  }
+};

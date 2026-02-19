@@ -24,5 +24,14 @@
         "organizeImports": "off"
       }
     }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noConsole": "warn"
+      }
+    }
   }
 }

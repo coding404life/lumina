@@ -4,8 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Button } from "./ui/button";
+import { signOut } from "next-auth/react";
+import { Avatar, AvatarFallback } from "./ui/avatar";
+import type { Session } from "next-auth";
 
-const Header = () => {
+const Header = ({ session }: { session: Session }) => {
   const pathname = usePathname();
 
   return (
@@ -24,6 +28,22 @@ const Header = () => {
             )}
           >
             Library
+          </Link>
+        </li>
+
+        <li>
+          <Button onClick={() => signOut()} className="cursor-pointer">
+            Sign Out
+          </Button>
+        </li>
+
+        <li>
+          <Link href="/my-profile">
+            <Avatar>
+              <AvatarFallback className="text-white bg-primary">
+                {session.user?.name?.charAt(0)}
+              </AvatarFallback>
+            </Avatar>
           </Link>
         </li>
       </ul>
