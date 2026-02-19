@@ -121,7 +121,7 @@ const BookOverview = ({
             <BookCover
               variant="wide"
               coverColor={coverColor}
-              coverImage={coverImage}
+              coverImage={cover}
             />
           </div>
         </div>

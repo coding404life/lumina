@@ -4,8 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn, getInitials } from "@/lib/utils";
-import { Button } from "./ui/button";
-import { signOut } from "next-auth/react";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import type { Session } from "next-auth";
 
@@ -13,11 +11,11 @@ const Header = ({ session }: { session: Session }) => {
   const pathname = usePathname();
 
   return (
-    <header className="glass-morphism mt-5 flex justify-between items-center gap-5 px-6 py-3 rounded-2xl shadow-2xl">
+    <header className="glass-morphism mt-5 flex w-full justify-between items-center gap-5 px-6 py-3 rounded-2xl shadow-2xl">
       <Link href="/">
         <div className="flex items-center gap-2">
           <Image src="/icons/knowledge.svg" alt="logo" width={32} height={32} />
-          <span className="font-bebas-neue text-2xl text-white tracking-widest hidden sm:block">
+          <span className="font-bebas-neue text-lg sm:text-2xl text-white tracking-widest ">
             LUMINA
           </span>
         </div>
@@ -55,10 +53,11 @@ const Header = ({ session }: { session: Session }) => {
             </span>
           </Link>
 
+          {/*
           <Button
-            onClick={() => signOut()}
+            onClick={signOut}
             variant="ghost"
-            className="group text-light-100 hover:text-white hover:bg-white/5 transition-all size-9 p-0 md:w-auto md:h-9 md:px-3 flex items-center justify-center gap-2"
+            className="group text-light-100 hover:text-white hover:bg-white/5 transition-all size-9 p-0 md:w-auto md:h-9 md:px-3 flex items-center justify-center gap-2 cursor-pointer"
           >
             <Image
               src="/icons/logout.svg"
@@ -68,7 +67,7 @@ const Header = ({ session }: { session: Session }) => {
               className="md:hidden opacity-70 group-hover:opacity-100"
             />
             <span className="hidden md:block">Sign Out</span>
-          </Button>
+          </Button> */}
         </div>
       </div>
     </header>
