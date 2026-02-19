@@ -24,7 +24,7 @@ const bebasNeue = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Knowledge | Digital Library Management",
+  title: "Lumina | Digital Library Management",
   description:
     "A premium digital library management solution for the modern age.",
 };

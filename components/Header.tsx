@@ -16,9 +16,9 @@ const Header = ({ session }: { session: Session }) => {
     <header className="glass-morphism mt-5 flex justify-between items-center gap-5 px-6 py-3 rounded-2xl shadow-2xl">
       <Link href="/">
         <div className="flex items-center gap-2">
-          <Image src="/icons/logo.svg" alt="logo" width={32} height={32} />
+          <Image src="/icons/knowledge.svg" alt="logo" width={32} height={32} />
           <span className="font-bebas-neue text-2xl text-white tracking-widest hidden sm:block">
-            KNOWLEDGE
+            LUMINA
           </span>
         </div>
       </Link>

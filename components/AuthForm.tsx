@@ -11,14 +11,6 @@ import type { ZodType } from "zod";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   Field,
   FieldError,
   FieldGroup,
@@ -68,89 +60,87 @@ const AuthForm = <T extends FieldValues>({
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-semibold text-white">
-        {isSignIn ? "Welcome to Knowledge" : "Create your library account"}
-      </h1>
-      <p className="text-light-100">
-        {isSignIn
-          ? "Access the vast collection of resources, and stay updated"
-          : "Please complete the form below to create your account"}
-      </p>
-      <Card className="w-full sm:max-w-md">
-        <CardHeader>
-          <CardTitle>{isSignIn ? "Sign In" : "Sign Up"}</CardTitle>
-          <CardDescription>
-            {isSignIn
-              ? "Access your account to continue"
-              : "Create an account to join our community"}
-          </CardDescription>
-        </CardHeader>
+    <div className="flex flex-col gap-8 w-full">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-3xl font-bold text-white tracking-tight">
+          {isSignIn ? "Welcome Back" : "Get Started"}
+        </h2>
+        <p className="text-light-100 text-sm font-light">
+          {isSignIn
+            ? "Welcome back! Please enter your details to continue."
+            : "Create your account to start managing your library today."}
+        </p>
+      </div>
 
-        <CardContent>
-          <form
-            id="auth-form"
-            onSubmit={form.handleSubmit(handleSubmit)}
-            className="space-y-6 w-full"
-          >
-            <FieldGroup>
-              {Object.keys(defaultValues).map((key) => (
-                <Controller
-                  key={key}
-                  name={key as Path<T>}
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel className="capitalize" htmlFor={key}>
-                        {FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}
-                      </FieldLabel>
-                      {field.name === "universityCard" ? (
-                        <ImageUpload
-                          onFileChange={field.onChange}
-                          defaultValue={field.value}
-                        />
-                      ) : (
-                        <Input
-                          required
-                          {...field}
-                          id={key}
-                          aria-invalid={fieldState.invalid}
-                          type={
-                            FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]
-                          }
-                          className="form-input"
-                        />
-                      )}
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
+      <form
+        id="auth-form"
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="space-y-5"
+      >
+        <FieldGroup>
+          {Object.keys(defaultValues).map((key) => (
+            <Controller
+              key={key}
+              name={key as Path<T>}
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field
+                  data-invalid={fieldState.invalid}
+                  className="flex flex-col gap-2"
+                >
+                  <FieldLabel
+                    className="text-white/80 text-xs font-semibold uppercase tracking-wider pl-1"
+                    htmlFor={key}
+                  >
+                    {FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}
+                  </FieldLabel>
+                  {field.name === "universityCard" ? (
+                    <ImageUpload
+                      onFileChange={field.onChange}
+                      defaultValue={field.value}
+                    />
+                  ) : (
+                    <Input
+                      required
+                      {...field}
+                      id={key}
+                      aria-invalid={fieldState.invalid}
+                      type={FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]}
+                      className="form-input bg-white/5 border-white/10 text-white placeholder:text-white/20 h-12 px-4 rounded-xl focus:bg-white/10 focus:border-primary/50 transition-all font-normal"
+                    />
                   )}
-                />
-              ))}
-            </FieldGroup>
-          </form>
-        </CardContent>
+                  {fieldState.invalid && (
+                    <FieldError
+                      errors={[fieldState.error]}
+                      className="text-red-400 text-xs pl-1"
+                    />
+                  )}
+                </Field>
+              )}
+            />
+          ))}
+        </FieldGroup>
 
-        <CardFooter className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6 pt-4">
           <Button
             type="submit"
             form="auth-form"
-            className="form-btn cursor-pointer"
+            className="form-btn h-14 rounded-xl font-bold text-lg tracking-wide hover:glow-effect transition-all"
           >
-            {isSignIn ? "Sign In" : "Sign Up"}
+            {isSignIn ? "Sign In" : "Create Account"}
           </Button>
-          <p className="text-sm text-center text-muted-foreground">
-            {isSignIn ? "Don't have an account? " : "Already have an account? "}
+
+          <p className="text-sm text-center text-light-100/60 font-medium">
+            {isSignIn ? "New to Lumina? " : "Already a member? "}
             <Link
               href={isSignIn ? "/sign-up" : "/sign-in"}
-              className="font-bold text-primary underline underline-offset-4"
+              className="text-primary hover:text-primary/80 font-bold underline underline-offset-4 transition-colors"
             >
-              {isSignIn ? "Sign Up" : "Sign In"}
+              {isSignIn ? "Create an account" : "Sign in here"}
             </Link>
           </p>
-        </CardFooter>
-      </Card>
+        </div>
+      </form>
     </div>
   );
 };
