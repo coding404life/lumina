@@ -22,7 +22,7 @@ interface AuthCredentials {
   email: string;
   password: string;
   universityId: number;
-  universityCard: string;
+  universityCard?: string;
 }
 
 interface BookParams {

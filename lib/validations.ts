@@ -5,7 +5,7 @@ export const signUpSchema = z.object({
   email: z.email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters long"),
   universityId: z.coerce.number().min(1, "University ID must be a number"),
-  universityCard: z.string().min(1, "University card is required"),
+  universityCard: z.string().optional(),
 });
 
 export const signInSchema = z.object({
