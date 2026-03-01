@@ -43,13 +43,19 @@ export const signUp = async (params: AuthCredentials) => {
       universityCard,
     });
 
-    await workflowClient.trigger({
-      url: `${config.env.apiEndpoint}/api/workflow/onboarding`,
-      body: {
-        email,
-        fullName,
-      },
-    });
+    // Non-blocking workflow trigger
+    workflowClient
+      .trigger({
+        url: `${config.env.apiEndpoint}/api/workflow/onboarding`,
+        body: {
+          email,
+          fullName,
+        },
+      })
+      .catch((error) => {
+        // biome-ignore lint/suspicious/noConsole: Log the error but don't crash
+        console.error("Workflow trigger failed:", error);
+      });
 
     await signInWithCredentials({ email, password });
 
@@ -88,4 +94,21 @@ export const signInWithCredentials = async (
     console.log(error, "Signin error");
     return { success: false, error: "Something went wrong" };
   }
+};
+
+export const signInWithDemo = async () => {
+  const demoEmail = process.env.DEMO_USER_EMAIL;
+  const demoPassword = process.env.DEMO_USER_PASSWORD;
+
+  if (!demoEmail || !demoPassword) {
+    return {
+      success: false,
+      error: "Demo account is not configured. Set DEMO_USER_EMAIL and DEMO_USER_PASSWORD.",
+    };
+  }
+
+  return signInWithCredentials({
+    email: demoEmail,
+    password: demoPassword,
+  });
 };

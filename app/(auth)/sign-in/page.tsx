@@ -2,7 +2,7 @@
 
 import AuthForm from "@/components/AuthForm";
 import { signInSchema } from "@/lib/validations";
-import { signInWithCredentials } from "@/lib/actions/auth";
+import { signInWithCredentials, signInWithDemo } from "@/lib/actions/auth";
 
 const SignInPage = () => (
   <AuthForm
@@ -10,6 +10,7 @@ const SignInPage = () => (
     schema={signInSchema}
     defaultValues={{ email: "", password: "" }}
     onSubmit={signInWithCredentials}
+    onDemoSignIn={signInWithDemo}
   />
 );
 

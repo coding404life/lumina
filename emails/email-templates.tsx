@@ -165,3 +165,24 @@ export async function activeUserEmail(fullName: string) {
   );
   return html;
 }
+
+export async function borrowedBookEmail({
+  fullName,
+  bookTitle,
+  universityId,
+}: {
+  fullName: string;
+  bookTitle: string;
+  universityId: number;
+}) {
+  const html = await render(
+    <EmailTemplate
+      title="Book Borrowed Successfully"
+      message={`Hi ${fullName}, your borrow request for "${bookTitle}" was approved successfully. You can now go to the university library and collect the book by showing your university ID (${universityId}) at the desk.`}
+      buttonText="Open Library Dashboard"
+      buttonLink="https://lumina.yahya-elmoshneb.com/library"
+    />,
+  );
+
+  return html;
+}

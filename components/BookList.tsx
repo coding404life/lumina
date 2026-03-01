@@ -1,8 +1,9 @@
 import BookCard from "./BookCard";
+import type { LibraryBook } from "@/lib/books";
 
 interface BookListProps {
   title: string;
-  books: Book[];
+  books: LibraryBook[];
   containerClassName?: string;
 }
 

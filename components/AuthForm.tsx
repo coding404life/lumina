@@ -27,6 +27,7 @@ interface Props<T extends FieldValues> {
   schema: ZodType<T, any, any>;
   defaultValues: T;
   onSubmit: (data: T) => Promise<{ success: boolean; error?: string }>;
+  onDemoSignIn?: () => Promise<{ success: boolean; error?: string }>;
 }
 
 const AuthForm = <T extends FieldValues>({
@@ -34,6 +35,7 @@ const AuthForm = <T extends FieldValues>({
   schema,
   defaultValues,
   onSubmit,
+  onDemoSignIn,
 }: Props<T>) => {
   const router = useRouter();
   const isSignIn = type === "SIGN_IN";
@@ -57,6 +59,20 @@ const AuthForm = <T extends FieldValues>({
         description: "Please check your credentials and try again",
       });
     }
+  };
+
+  const handleDemoLogin = async () => {
+    if (!onDemoSignIn) return;
+
+    const result = await onDemoSignIn();
+
+    if (result.success) {
+      toast.success("Signed in with demo account");
+      router.push("/");
+      return;
+    }
+
+    toast.error(result.error || "Demo access failed");
   };
 
   return (
@@ -130,6 +146,14 @@ const AuthForm = <T extends FieldValues>({
             {isSignIn ? "Sign In" : "Create Account"}
           </Button>
 
+          <Button
+            type="button"
+            onClick={handleDemoLogin}
+            className="h-12 rounded-xl border border-primary/40 bg-transparent text-primary hover:bg-primary/10 transition-all"
+          >
+            {isSignIn ? "Try Demo Account" : "View Demo Instead"}
+          </Button>
+
           <p className="text-sm text-center text-light-100/60 font-medium">
             {isSignIn ? "New to Lumina? " : "Already a member? "}
             <Link
@@ -138,6 +162,11 @@ const AuthForm = <T extends FieldValues>({
             >
               {isSignIn ? "Create an account" : "Sign in here"}
             </Link>
+          </p>
+
+          <p className="text-xs text-center text-light-100/50">
+            Demo mode is ideal for product walkthroughs without creating a new
+            account.
           </p>
         </div>
       </form>

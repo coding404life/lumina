@@ -2,15 +2,10 @@ import Image from "next/image";
 import BookCover from "@/components/BookCover";
 import BorrowBook from "./BorrowBook";
 import { cn } from "@/lib/utils";
-
-interface Props extends Book {
-  userId: string;
-  totalCopies: number;
-  availableCopies: number;
-  video: string;
-}
+import type { LibraryBook } from "@/lib/books";
 
 const BookOverview = ({
+  id,
   title,
   author,
   genre,
@@ -20,10 +15,7 @@ const BookOverview = ({
   description,
   coverColor,
   coverImage,
-  id,
-  userId,
-  cover,
-}: Props) => {
+}: LibraryBook) => {
   const borrowingEligibility = {
     isEligible: availableCopies > 0,
     message: availableCopies <= 0 ? "Book is not available" : "",
@@ -99,11 +91,7 @@ const BookOverview = ({
         </div>
 
         <div className="mt-4">
-          <BorrowBook
-            bookId={id}
-            userId={userId}
-            borrowingEligibility={borrowingEligibility}
-          />
+          <BorrowBook bookId={id} borrowingEligibility={borrowingEligibility} />
         </div>
       </div>
 
@@ -114,14 +102,14 @@ const BookOverview = ({
             variant="wide"
             className="z-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform transition-transform group-hover:scale-[1.02] group-hover:-rotate-1"
             coverColor={coverColor}
-            coverImage={cover}
+            coverImage={coverImage}
           />
 
           <div className="absolute left-16 top-10 rotate-12 opacity-30 max-sm:hidden -z-10 blur-[1px]">
             <BookCover
               variant="wide"
               coverColor={coverColor}
-              coverImage={cover}
+              coverImage={coverImage}
             />
           </div>
         </div>

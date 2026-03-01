@@ -1,15 +1,15 @@
 import BookList from "@/components/BookList";
 import BookOverview from "@/components/BookOverview";
-import { sampleBooks } from "@/constants";
+import { booksCatalog } from "@/lib/books";
 
 export default function Home() {
   return (
     <>
-      <BookOverview {...sampleBooks[5]} />
+      <BookOverview {...booksCatalog[5]} />
 
       <BookList
         title="Latest Books"
-        books={sampleBooks}
+        books={booksCatalog}
         containerClassName="mt-28"
       />
     </>

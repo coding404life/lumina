@@ -3,15 +3,16 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import BookCover from "./BookCover";
 import { cn } from "@/lib/utils";
+import type { LibraryBook } from "@/lib/books";
 
 const BookCard = ({
   id,
   title,
   genre,
   coverColor,
-  cover,
+  coverImage,
   isLoanedBook = false,
-}: Book & { isLoanedBook?: boolean }) => (
+}: LibraryBook & { isLoanedBook?: boolean }) => (
   <li
     className={cn(
       "group transition-all duration-300 hover:-translate-y-2",
@@ -29,7 +30,7 @@ const BookCard = ({
         <div className="absolute -inset-2 bg-primary/10 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
         <BookCover
           coverColor={coverColor}
-          coverImage={cover}
+          coverImage={coverImage}
           className="shadow-lg group-hover:shadow-primary/20 transition-shadow"
         />
       </div>
