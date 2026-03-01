@@ -7,7 +7,7 @@ import {
   activeUserEmail,
   reEngagementEmail,
   welcomeEmail,
-} from "@/lib/email-templates";
+} from "@/emails/email-templates";
 
 type UserState = "non-active" | "active";
 
@@ -46,7 +46,7 @@ export const { POST } = serve<InitialData>(async (context) => {
     await sendEmail({
       email,
       subject: "Welcome to Lumina",
-      message: welcomeEmail(fullName),
+      message: await welcomeEmail(fullName),
     });
   });
 
@@ -62,7 +62,7 @@ export const { POST } = serve<InitialData>(async (context) => {
         await sendEmail({
           email,
           subject: "We miss you!",
-          message: reEngagementEmail(fullName),
+          message: await reEngagementEmail(fullName),
         });
       });
     } else if (state === "active") {
@@ -70,7 +70,7 @@ export const { POST } = serve<InitialData>(async (context) => {
         await sendEmail({
           email,
           subject: "You're Doing Great!",
-          message: activeUserEmail(fullName),
+          message: await activeUserEmail(fullName),
         });
       });
     }
