@@ -3,6 +3,11 @@ import { users } from "@/database/schema";
 import { sendEmail } from "@/lib/workflow";
 import { serve } from "@upstash/workflow/nextjs";
 import { eq } from "drizzle-orm";
+import {
+  activeUserEmail,
+  reEngagementEmail,
+  welcomeEmail,
+} from "@/lib/email-templates";
 
 type UserState = "non-active" | "active";
 
@@ -40,8 +45,8 @@ export const { POST } = serve<InitialData>(async (context) => {
   await context.run("new-signup", async () => {
     await sendEmail({
       email,
-      subject: "Welcome to the platform",
-      message: `Welcome ${fullName} to the platform`,
+      subject: "Welcome to Lumina",
+      message: welcomeEmail(fullName),
     });
   });
 
@@ -56,16 +61,16 @@ export const { POST } = serve<InitialData>(async (context) => {
       await context.run("send-email-non-active", async () => {
         await sendEmail({
           email,
-          subject: "Are you still using the platform?",
-          message: `Hey, ${fullName} we just wanted to check in and see if you're still using the platform. If you're not, we're sorry to hear that. If you are, we're happy to hear that!`,
+          subject: "We miss you!",
+          message: reEngagementEmail(fullName),
         });
       });
     } else if (state === "active") {
       await context.run("send-email-active", async () => {
         await sendEmail({
           email,
-          subject: "Welcome back to the platform",
-          message: `Hey, ${fullName} we just wanted to check in and see if you're still using the platform. If you're not, we're sorry to hear that. If you are, we're happy to hear that!`,
+          subject: "You're Doing Great!",
+          message: activeUserEmail(fullName),
         });
       });
     }
