@@ -58,7 +58,7 @@ const EmailTemplate = ({
           <Section style={{ backgroundColor: "#12141d", width: "100%" }}>
             <Container className="border border-white/5 border-solid mx-auto my-[40px] max-w-[600px] rounded-xl overflow-hidden bg-card shadow-2xl">
               {/* Header / Logo section */}
-              <Section className="bg-gradient-to-b from-[#232839] to-dark py-12 px-5 text-center">
+              <Section className="bg-linear-to-b from-dark-300 to-dark py-12 px-5 text-center">
                 <Link
                   href="https://lumina.yahya-elmoshneb.com"
                   className="text-primary text-[28px] font-bold tracking-[4px] uppercase no-underline"
@@ -87,7 +87,7 @@ const EmailTemplate = ({
                 {buttonText && buttonLink && (
                   <Section className="text-center my-6">
                     <Button
-                      className="bg-primary text-[#16191e] font-bold py-4 px-10 rounded-lg text-center no-underline inline-block"
+                      className="bg-primary text-dark-100 font-bold py-4 px-10 rounded-lg text-center no-underline inline-block"
                       href={buttonLink}
                     >
                       {buttonText}
