@@ -6,6 +6,14 @@ import { usePathname } from "next/navigation";
 import { cn, getInitials } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import type { Session } from "next-auth";
+import { signOut } from "next-auth/react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 const Header = ({ session }: { session: Session }) => {
   const pathname = usePathname();
@@ -36,38 +44,59 @@ const Header = ({ session }: { session: Session }) => {
               Library
             </Link>
           </li>
+          {session.user?.role === "ADMIN" && (
+            <li>
+              <Link
+                href="/admin/users"
+                className={cn(
+                  "text-sm font-medium transition-all hover:text-primary-admin",
+                  pathname.startsWith("/admin")
+                    ? "text-primary-admin"
+                    : "text-light-100",
+                )}
+              >
+                Dashboard
+              </Link>
+            </li>
+          )}
         </ul>
 
-        <div className="flex items-center gap-2 sm:gap-4 border-l border-white/10 pl-4 sm:pl-10">
-          <Link
-            href="/my-profile"
-            className="flex items-center gap-2 text-white"
-          >
-            <Avatar className="size-8 sm:size-9 ring-2 ring-primary/20 transition-all hover:ring-primary/50">
-              <AvatarFallback className="bg-amber-100 text-dark-100 font-bold text-xs sm:text-base">
-                {getInitials(session.user?.name || "IN")}
-              </AvatarFallback>
-            </Avatar>
-            <span className="text-light-100 text-sm font-medium hidden lg:block">
-              {session.user?.name}
-            </span>
-          </Link>
-
-          {/*
-          <Button
-            onClick={signOut}
-            variant="ghost"
-            className="group text-light-100 hover:text-white hover:bg-white/5 transition-all size-9 p-0 md:w-auto md:h-9 md:px-3 flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <Image
-              src="/icons/logout.svg"
-              alt="logout"
-              width={20}
-              height={20}
-              className="md:hidden opacity-70 group-hover:opacity-100"
-            />
-            <span className="hidden md:block">Sign Out</span>
-          </Button> */}
+        <div className="relative flex items-center gap-2 sm:gap-4 border-l border-white/10 pl-4 sm:pl-10">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="flex items-center gap-2 text-white cursor-pointer"
+              >
+                <Avatar className="size-8 sm:size-9 ring-2 ring-primary/20 transition-all hover:ring-primary/50">
+                  <AvatarFallback className="bg-amber-100 text-dark-100 font-bold text-xs sm:text-base">
+                    {getInitials(session.user?.name || "IN")}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="text-light-100 text-sm font-medium hidden lg:block">
+                  {session.user?.name}
+                </span>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="w-44 border-white/10 bg-dark-300 text-light-100"
+            >
+              <DropdownMenuItem
+                asChild
+                className="cursor-pointer focus:bg-white/5 focus:text-white"
+              >
+                <Link href="/my-profile">Profile</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="bg-white/10" />
+              <DropdownMenuItem
+                onClick={() => signOut({ callbackUrl: "/sign-in" })}
+                className="cursor-pointer focus:bg-white/5 focus:text-white"
+              >
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>
