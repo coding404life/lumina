@@ -15,14 +15,14 @@ const BookCard = ({
 }: LibraryBook & { isLoanedBook?: boolean }) => (
   <li
     className={cn(
-      "group transition-all duration-300 hover:-translate-y-2",
+      "group transition-all duration-300",
       isLoanedBook ? "xs:w-52 w-full" : "",
     )}
   >
     <Link
       href={`/books/${id}`}
       className={cn(
-        "flex flex-col items-center p-3 rounded-2xl transition-all duration-300 group-hover:glass-morphism group-hover:shadow-2xl",
+        "flex flex-col items-center p-3 rounded-2xl transition-all duration-200 group-hover:glass-morphism group-hover:shadow-2xl",
         isLoanedBook ? "w-full" : "",
       )}
     >

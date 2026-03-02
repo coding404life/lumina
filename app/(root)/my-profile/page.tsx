@@ -5,6 +5,7 @@ import { db } from "@/database/db";
 import { users } from "@/database/schema";
 import { booksCatalog } from "@/lib/books";
 import { eq } from "drizzle-orm";
+import Link from "next/link";
 
 const MyProfilePage = async () => {
   const session = await auth();
@@ -16,6 +17,7 @@ const MyProfilePage = async () => {
           email: users.email,
           universityId: users.universityId,
           status: users.status,
+          role: users.role,
           createdAt: users.createdAt,
           universityCard: users.universityCard,
         })
@@ -59,17 +61,28 @@ const MyProfilePage = async () => {
               </p>
             </div>
 
-            <form
-              action={async () => {
-                "use server";
+            <div className="flex flex-wrap items-center gap-3">
+              {user?.role === "ADMIN" && (
+                <Button
+                  asChild
+                  className="cursor-pointer bg-primary-admin text-white hover:bg-primary-admin/90"
+                >
+                  <Link href="/admin/books/new">Create New Book</Link>
+                </Button>
+              )}
 
-                await signOut();
-              }}
-            >
-              <Button className="cursor-pointer bg-white/5 text-light-100 hover:bg-white/10">
-                Logout
-              </Button>
-            </form>
+              <form
+                action={async () => {
+                  "use server";
+
+                  await signOut();
+                }}
+              >
+                <Button className="cursor-pointer bg-white/5 text-light-100 hover:bg-white/10">
+                  Logout
+                </Button>
+              </form>
+            </div>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
