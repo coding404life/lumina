@@ -28,7 +28,7 @@ export const users = pgTable("users", {
   universityId: integer("university_id").notNull().unique(),
   universityCard: text("university_card"),
   status: STATUS_ENUM("status").default("PENDING"),
-  role: ROLE_ENUM("role").default("USER"),
+  role: ROLE_ENUM("role").default("USER").notNull(),
   lastActivityDate: date("last_activity_date").defaultNow(),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
