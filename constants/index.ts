@@ -14,11 +14,6 @@ export const navigationLinks = [
 
 export const adminSideBarLinks = [
   {
-    img: "/icons/admin/home.svg",
-    route: "/admin",
-    text: "Home",
-  },
-  {
     img: "/icons/admin/users.svg",
     route: "/admin/users",
     text: "All Users",
