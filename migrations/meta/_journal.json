@@ -50,6 +50,13 @@
       "when": 1772524466568,
       "tag": "0006_flashy_quentin_quire",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1772525774948,
+      "tag": "0007_white_wong",
+      "breakpoints": true
     }
   ]
 }

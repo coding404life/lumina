@@ -16,6 +16,12 @@ export const STATUS_ENUM = pgEnum("status", [
   "APPROVED",
   "REJECTED",
 ]);
+
+export const BOOK_STATUS_ENUM = pgEnum("book_status", [
+  "OUT_OF_STOCK",
+  "IN_STOCK",
+]);
+
 export const ROLE_ENUM = pgEnum("role", ["USER", "ADMIN"]);
 export const BORROW_STATUS_ENUM = pgEnum("borrow_status", [
   "BORROWED",
@@ -47,7 +53,7 @@ export const books = pgTable(
     availableCopies: integer("available_copies"),
     description: text("description"),
     coverImage: text("cover_image"),
-    status: STATUS_ENUM("status").notNull(),
+    status: BOOK_STATUS_ENUM("status").notNull().default("IN_STOCK"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").defaultNow(),
   },
