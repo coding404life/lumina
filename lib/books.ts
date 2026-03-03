@@ -9,10 +9,7 @@ export interface LibraryBook {
   totalCopies: number;
   availableCopies: number;
   description: string;
-  coverColor: string;
   coverImage: string;
-  videoUrl: string;
-  summary: string;
 }
 
 const normalizeBook = (book: (typeof sampleBooks)[number]): LibraryBook => ({
@@ -24,10 +21,7 @@ const normalizeBook = (book: (typeof sampleBooks)[number]): LibraryBook => ({
   totalCopies: book.total_copies,
   availableCopies: book.available_copies,
   description: book.description,
-  coverColor: book.color,
   coverImage: book.cover,
-  videoUrl: book.video,
-  summary: book.summary,
 });
 
 export const booksCatalog = sampleBooks.map(normalizeBook);

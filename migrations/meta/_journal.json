@@ -43,6 +43,13 @@
       "when": 1772523089085,
       "tag": "0005_heavy_gravity",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1772524466568,
+      "tag": "0006_flashy_quentin_quire",
+      "breakpoints": true
     }
   ]
 }

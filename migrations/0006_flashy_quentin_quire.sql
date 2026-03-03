@@ -1,0 +1,1 @@
+ALTER TABLE "books" ADD CONSTRAINT "available_copies_check" CHECK ("books"."available_copies" <= "books"."total_copies");

@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import {
   pgTable,
   text,
@@ -7,6 +8,7 @@ import {
   timestamp,
   pgEnum,
   date,
+  check,
 } from "drizzle-orm/pg-core";
 
 export const STATUS_ENUM = pgEnum("status", [
@@ -33,17 +35,26 @@ export const users = pgTable("users", {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
 
-export const books = pgTable("books", {
-  id: uuid("id").notNull().primaryKey().defaultRandom().unique(),
-  title: varchar("title", { length: 255 }).notNull(),
-  author: varchar("author", { length: 255 }).notNull(),
-  genre: varchar("genre", { length: 255 }).notNull(),
-  rating: integer("rating"),
-  totalCopies: integer("total_copies").notNull(),
-  availableCopies: integer("available_copies"),
-  description: text("description"),
-  coverImage: text("cover_image"),
-  status: STATUS_ENUM("status").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
-});
+export const books = pgTable(
+  "books",
+  {
+    id: uuid("id").notNull().primaryKey().defaultRandom().unique(),
+    title: varchar("title", { length: 255 }).notNull(),
+    author: varchar("author", { length: 255 }).notNull(),
+    genre: varchar("genre", { length: 255 }).notNull(),
+    rating: integer("rating"),
+    totalCopies: integer("total_copies").notNull(),
+    availableCopies: integer("available_copies"),
+    description: text("description"),
+    coverImage: text("cover_image"),
+    status: STATUS_ENUM("status").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").defaultNow(),
+  },
+  (table) => [
+    check(
+      "available_copies_check",
+      sql`${table.availableCopies} <= ${table.totalCopies}`,
+    ),
+  ],
+);
