@@ -34,6 +34,21 @@ const AdminMobileNav = () => {
           );
         })}
       </ul>
+
+      <div className="mt-2 grid grid-cols-2 gap-2 border-t border-white/10 pt-2">
+        <Link
+          href="/"
+          className="rounded-lg border border-white/10 px-3 py-2 text-center text-xs text-light-100/90 transition-colors hover:bg-white/5"
+        >
+          Go back to home
+        </Link>
+        <Link
+          href="/my-profile"
+          className="rounded-lg border border-white/10 px-3 py-2 text-center text-xs text-light-100/90 transition-colors hover:bg-white/5"
+        >
+          My Profile
+        </Link>
+      </div>
     </nav>
   );
 };
