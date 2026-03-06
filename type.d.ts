@@ -5,16 +5,10 @@ interface Book {
   author: string;
   genre: string;
   rating: number;
-  total_copies: number;
-  available_copies: number;
+  totalCopies: number;
+  availableCopies: number;
   description: string;
-  coverColor: string;
-  coverUrl: string;
-  videoUrl: string;
-  summary: string;
-  createdAt: Date | null;
   coverImage: string;
-  cover: string;
 }
 
 interface AuthCredentials {
@@ -30,12 +24,10 @@ interface BookParams {
   author: string;
   genre: string;
   rating: number;
-  coverUrl: string;
-  coverColor: string;
-  description: string;
+  coverImage: string;
+  availableCopies: number;
+  description?: string;
   totalCopies: number;
-  videoUrl: string;
-  summary: string;
 }
 
 interface BorrowBookParams {

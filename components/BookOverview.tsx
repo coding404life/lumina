@@ -13,7 +13,6 @@ const BookOverview = ({
   totalCopies,
   availableCopies,
   description,
-  coverColor,
   coverImage,
 }: LibraryBook) => {
   const borrowingEligibility = {
@@ -101,16 +100,11 @@ const BookOverview = ({
           <BookCover
             variant="wide"
             className="z-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform transition-transform group-hover:scale-[1.02] group-hover:-rotate-1"
-            coverColor={coverColor}
             coverImage={coverImage}
           />
 
           <div className="absolute left-16 top-10 rotate-12 opacity-30 max-sm:hidden -z-10 blur-[1px]">
-            <BookCover
-              variant="wide"
-              coverColor={coverColor}
-              coverImage={coverImage}
-            />
+            <BookCover variant="wide" coverImage={coverImage} />
           </div>
         </div>
       </div>

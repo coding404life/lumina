@@ -1,8 +1,8 @@
 "use client";
 
-const BookVideo = ({ videoUrl }: { videoUrl: string }) => {
+const BookVideo = () => {
   return (
-    <video src={videoUrl} controls className="w-full rounded-xl">
+    <video src="" controls className="w-full rounded-xl">
       <track kind="captions" srcLang="en" label="English" />
     </video>
   );

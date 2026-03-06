@@ -16,7 +16,7 @@ const variantStyles: Record<BookCoverVariant, string> = {
 interface Props {
   className?: string;
   variant?: BookCoverVariant;
-  coverColor: string;
+  coverColor?: string;
   coverImage: string;
 }
 

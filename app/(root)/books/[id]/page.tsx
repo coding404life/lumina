@@ -26,7 +26,7 @@ const BookDetailsPage = async ({
             Why You Should Read It
           </h2>
           <p className="mt-4 text-base leading-7 text-light-100/90 sm:text-lg">
-            {book.summary}
+            {book.description}
           </p>
         </article>
 
@@ -38,7 +38,7 @@ const BookDetailsPage = async ({
             Quick Preview
           </h2>
           <div className="mt-5">
-            <BookVideo videoUrl={book.videoUrl} />
+            <BookVideo />
           </div>
         </article>
       </section>

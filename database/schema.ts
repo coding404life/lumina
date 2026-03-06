@@ -52,7 +52,7 @@ export const books = pgTable(
     totalCopies: integer("total_copies").notNull(),
     availableCopies: integer("available_copies"),
     description: text("description"),
-    coverImage: text("cover_image"),
+    coverImage: text("cover_image").notNull(),
     status: BOOK_STATUS_ENUM("status").notNull().default("IN_STOCK"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").defaultNow(),

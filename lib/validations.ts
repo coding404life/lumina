@@ -17,10 +17,15 @@ export const addBookSchema = z.object({
   title: z.string().min(1, "Title is required"),
   author: z.string().min(1, "Author is required"),
   genre: z.string().min(1, "Genre is required"),
-  rating: z.coerce.number().min(0).max(5),
+  rating: z.coerce.number().min(1, "Rating must be at least 1").max(5),
   totalCopies: z.coerce.number().min(1, "Total copies must be at least 1"),
-  description: z.string().optional(),
-  coverImage: z.string().optional(),
+  availableCopies: z.coerce
+    .number()
+    .min(1, "Available copies must be at least 1"),
+  description: z
+    .string()
+    .min(10, "Description must be at least 10 characters long"),
+  coverImage: z.string().min(1, "Book cover image is required"),
 });
 
 export type SignUpSchema = z.infer<typeof signUpSchema>;

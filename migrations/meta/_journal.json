@@ -57,6 +57,13 @@
       "when": 1772525774948,
       "tag": "0007_white_wong",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1772775467570,
+      "tag": "0008_rich_red_hulk",
+      "breakpoints": true
     }
   ]
 }

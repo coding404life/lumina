@@ -1,4 +1,3 @@
-/** biome-ignore-all assist/source/organizeImports: false */
 "use client";
 
 import {
@@ -11,7 +10,7 @@ import {
   ImageKitUploadNetworkError,
 } from "@imagekit/next";
 import config from "@/lib/config";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
 
@@ -53,6 +52,15 @@ const ImageUpload = ({ onFileChange, defaultValue }: Props) => {
   );
   const [progress, setProgress] = useState(0);
 
+  useEffect(() => {
+    if (defaultValue) {
+      setFile({ filePath: defaultValue });
+    } else {
+      setFile(null);
+    }
+    setProgress(0);
+  }, [defaultValue]);
+
   const handleUpload = async (selectedFile: File) => {
     setProgress(0);
     const abortController = new AbortController();
@@ -80,15 +88,17 @@ const ImageUpload = ({ onFileChange, defaultValue }: Props) => {
       }
     } catch (error) {
       if (error instanceof ImageKitAbortError) {
-        console.error("Upload aborted:", error.reason);
+        toast.error(`Upload aborted: ${error.reason}`);
       } else if (error instanceof ImageKitInvalidRequestError) {
-        console.error("Invalid request:", error.message);
+        toast.error(`Invalid request: ${error.message}`);
       } else if (error instanceof ImageKitUploadNetworkError) {
-        console.error("Network error:", error.message);
+        toast.error(`Network error: ${error.message}`);
       } else if (error instanceof ImageKitServerError) {
-        console.error("Server error:", error.message);
+        toast.error(`Server error: ${error.message}`);
       } else {
-        console.error("Upload error:", error);
+        toast.error(
+          `Upload error: ${error instanceof Error ? error.message : String(error)}`,
+        );
       }
     }
   };

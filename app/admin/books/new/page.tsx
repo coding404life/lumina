@@ -2,12 +2,43 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import Image from "next/image";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, Controller } from "react-hook-form";
+import { addBookSchema, type AddBookSchema } from "@/lib/validations";
+import { BookFormInput } from "@/components/admin/forms/BookFormInput";
+import ImageUpload from "@/components/ImageUpload";
+import { createNewBook } from "@/lib/actions/newBook";
+import { toast } from "sonner";
 
 const AddNewBookPage = () => {
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
+
+  const defaultValues: AddBookSchema = {
+    title: "",
+    author: "",
+    genre: "",
+    rating: 0,
+    totalCopies: 1,
+    availableCopies: 1,
+    description: "",
+    coverImage: "",
+  };
+
+  const handleSubmit = async (data: AddBookSchema) => {
+    const result = await createNewBook(data);
+    if (result.success) {
+      setIsPublishModalOpen(false);
+      toast.success(result.message);
+      form.reset();
+    } else {
+      toast.error(result.error);
+    }
+  };
+
+  const form = useForm({
+    resolver: zodResolver(addBookSchema),
+    defaultValues,
+  });
 
   return (
     <div className="relative space-y-6">
@@ -20,94 +51,79 @@ const AddNewBookPage = () => {
           <h1 className="mt-3 font-bebas-neue text-5xl tracking-[0.08em] text-white sm:text-6xl">
             Add New Book
           </h1>
-          <p className="mt-3 max-w-2xl text-sm text-light-100/80 sm:text-base">
-            This page is currently UI-only for admin users. It does not create
-            API calls or write to the database.
-          </p>
         </div>
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[1.35fr_1fr]">
         <form className="glass-morphism space-y-5 rounded-3xl border border-white/10 p-6 sm:p-8">
           <div className="grid gap-5 sm:grid-cols-2">
-            <div className="space-y-2">
-              <label htmlFor="title" className="text-sm text-light-100/80">
-                Book Title
-              </label>
-              <Input
-                id="title"
-                placeholder="The Great Gatsby"
-                className="h-12 border-white/15 bg-white/5 text-white"
-              />
-            </div>
+            <BookFormInput
+              id="title"
+              label="Book Title"
+              placeholder="The Great Gatsby"
+              register={form.register}
+              error={form.formState.errors.title?.message}
+            />
 
-            <div className="space-y-2">
-              <label htmlFor="author" className="text-sm text-light-100/80">
-                Author
-              </label>
-              <Input
-                id="author"
-                placeholder="F. Scott Fitzgerald"
-                className="h-12 border-white/15 bg-white/5 text-white"
-              />
-            </div>
+            <BookFormInput
+              id="author"
+              label="Author"
+              placeholder="F. Scott Fitzgerald"
+              register={form.register}
+              error={form.formState.errors.author?.message}
+            />
           </div>
 
           <div className="grid gap-5 sm:grid-cols-3">
-            <div className="space-y-2">
-              <label htmlFor="genre" className="text-sm text-light-100/80">
-                Genre
-              </label>
-              <Input
-                id="genre"
-                placeholder="Fiction"
-                className="h-12 border-white/15 bg-white/5 text-white"
-              />
-            </div>
+            <BookFormInput
+              id="genre"
+              label="Genre"
+              placeholder="Fiction"
+              register={form.register}
+              error={form.formState.errors.genre?.message}
+            />
 
-            <div className="space-y-2">
-              <label htmlFor="rating" className="text-sm text-light-100/80">
-                Rating
-              </label>
-              <Input
-                id="rating"
-                type="number"
-                min="0"
-                max="5"
-                step="0.1"
-                placeholder="4.8"
-                className="h-12 border-white/15 bg-white/5 text-white"
-              />
-            </div>
+            <BookFormInput
+              id="rating"
+              label="Rating"
+              type="number"
+              min={0}
+              max={5}
+              step="0.1"
+              placeholder="4.8"
+              register={form.register}
+              error={form.formState.errors.rating?.message}
+            />
 
-            <div className="space-y-2">
-              <label
-                htmlFor="totalCopies"
-                className="text-sm text-light-100/80"
-              >
-                Total Copies
-              </label>
-              <Input
-                id="totalCopies"
-                type="number"
-                min="1"
-                placeholder="10"
-                className="h-12 border-white/15 bg-white/5 text-white"
-              />
-            </div>
-          </div>
+            <BookFormInput
+              id="totalCopies"
+              label="Total Copies"
+              type="number"
+              min={1}
+              placeholder="10"
+              register={form.register}
+              error={form.formState.errors.totalCopies?.message}
+            />
 
-          <div className="space-y-2">
-            <label htmlFor="description" className="text-sm text-light-100/80">
-              Description
-            </label>
-            <Textarea
-              id="description"
-              rows={5}
-              placeholder="Add a concise, reader-friendly description..."
-              className="border-white/15 bg-white/5 text-white"
+            <BookFormInput
+              id="availableCopies"
+              label="Available Copies"
+              type="number"
+              min={0}
+              placeholder="0"
+              register={form.register}
+              error={form.formState.errors.availableCopies?.message}
             />
           </div>
+
+          <BookFormInput
+            id="description"
+            label="Description"
+            placeholder="Add a concise, reader-friendly description..."
+            isTextArea
+            register={form.register}
+            error={form.formState.errors.description?.message}
+          />
         </form>
 
         <aside className="space-y-6">
@@ -115,49 +131,22 @@ const AddNewBookPage = () => {
             <h2 className="font-bebas-neue text-3xl tracking-widest text-white">
               Book Cover
             </h2>
-            <div className="mt-5 space-y-4">
-              <div className="space-y-2">
-                <label htmlFor="coverUrl" className="text-sm text-light-100/80">
-                  Cover Image URL
-                </label>
-                <Input
-                  id="coverUrl"
-                  placeholder="https://..."
-                  className="h-12 border-white/15 bg-white/5 text-white"
-                />
-              </div>
-
-              <div className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-6 text-center">
-                <input
-                  id="coverFile"
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                />
-                <label htmlFor="coverFile" className="cursor-pointer">
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary-admin/15">
-                    <Image
-                      src="/icons/upload.svg"
-                      alt="upload"
-                      width={22}
-                      height={22}
-                    />
-                  </div>
-                  <p className="mt-3 text-sm text-white">
-                    Drop image here or click to choose file
-                  </p>
-                  <p className="mt-1 text-xs text-light-100/70">
-                    PNG, JPG up to 5MB
-                  </p>
-                </label>
-
-                <Button
-                  type="button"
-                  className="mt-4 w-full bg-primary-admin text-white hover:bg-primary-admin/90"
-                >
-                  Upload Cover Image
-                </Button>
-              </div>
+            <div className="mt-5">
+              <Controller
+                name="coverImage"
+                control={form.control}
+                render={({ field }) => (
+                  <ImageUpload
+                    onFileChange={field.onChange}
+                    defaultValue={field.value}
+                  />
+                )}
+              />
+              {form.formState.errors.coverImage && (
+                <p className="text-xs text-red-500 mt-2">
+                  {form.formState.errors.coverImage.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -211,7 +200,7 @@ const AddNewBookPage = () => {
               <Button
                 type="button"
                 className="bg-primary-admin text-white hover:bg-primary-admin/90"
-                onClick={() => setIsPublishModalOpen(false)}
+                onClick={form.handleSubmit(handleSubmit)}
               >
                 Confirm Publish
               </Button>

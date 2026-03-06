@@ -9,7 +9,6 @@ const BookCard = ({
   id,
   title,
   genre,
-  coverColor,
   coverImage,
   isLoanedBook = false,
 }: LibraryBook & { isLoanedBook?: boolean }) => (
@@ -29,7 +28,6 @@ const BookCard = ({
       <div className="relative">
         <div className="absolute -inset-2 bg-primary/10 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
         <BookCover
-          coverColor={coverColor}
           coverImage={coverImage}
           className="shadow-lg group-hover:shadow-primary/20 transition-shadow"
         />

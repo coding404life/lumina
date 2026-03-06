@@ -41,9 +41,6 @@ const AdminBooksPage = () => {
           <h1 className="mt-3 font-bebas-neue text-5xl tracking-[0.08em] text-white sm:text-6xl">
             All Books
           </h1>
-          <p className="mt-3 max-w-2xl text-sm text-light-100/80 sm:text-base">
-            Demo inventory UI only. This page does not fetch or modify data.
-          </p>
         </div>
       </section>
 
