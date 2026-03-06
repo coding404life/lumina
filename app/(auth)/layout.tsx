@@ -13,7 +13,6 @@ const Layout = async ({ children }: { children: ReactNode }) => {
 
   return (
     <main className="auth-container relative min-h-screen overflow-hidden bg-dark-100">
-      <div className="absolute top-0 left-0 w-full h-full bg-pattern opacity-10 -z-10" />
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[150px] rounded-full -z-10" />
       <div className="absolute bottom-[-10%] right-[40%] w-[30%] h-[30%] bg-primary/5 blur-[120px] rounded-full -z-10" />
 

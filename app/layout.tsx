@@ -40,7 +40,7 @@ export default async function RootLayout({
     <html lang="en">
       <SessionProvider session={session}>
         <body
-          className={`${ibmPlexSans.className} ${bebasNeue.variable}  antialiased`}
+          className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased min-h-screen bg-pattern bg-cover bg-top`}
         >
           {children}
           <Toaster />
