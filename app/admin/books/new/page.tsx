@@ -9,6 +9,7 @@ import { BookFormInput } from "@/components/admin/forms/BookFormInput";
 import ImageUpload from "@/components/ImageUpload";
 import { createNewBook } from "@/lib/actions/newBook";
 import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 const AddNewBookPage = () => {
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
@@ -26,10 +27,12 @@ const AddNewBookPage = () => {
 
   const handleSubmit = async (data: AddBookSchema) => {
     const result = await createNewBook(data);
+
     if (result.success) {
       setIsPublishModalOpen(false);
       toast.success(result.message);
       form.reset();
+      redirect("/admin/books");
     } else {
       toast.error(result.error);
     }

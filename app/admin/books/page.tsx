@@ -1,35 +1,9 @@
-const demoBooks = [
-  {
-    title: "The Midnight Library",
-    author: "Matt Haig",
-    genre: "Fantasy / Fiction",
-    copies: "10 / 20",
-    status: "Available",
-  },
-  {
-    title: "Atomic Habits",
-    author: "James Clear",
-    genre: "Self-Help / Productivity",
-    copies: "50 / 99",
-    status: "Popular",
-  },
-  {
-    title: "Deep Work",
-    author: "Cal Newport",
-    genre: "Productivity",
-    copies: "23 / 23",
-    status: "In Stock",
-  },
-  {
-    title: "The Pragmatic Programmer",
-    author: "Andrew Hunt, David Thomas",
-    genre: "Programming",
-    copies: "3 / 25",
-    status: "Low Stock",
-  },
-];
+import { getBooks } from "@/database/queries/queries";
+import { cn } from "@/lib/utils";
 
-const AdminBooksPage = () => {
+const AdminBooksPage = async () => {
+  const books = await getBooks();
+
   return (
     <div className="space-y-6">
       <section className="glass-morphism relative overflow-hidden rounded-3xl border border-white/10 p-7 sm:p-9">
@@ -82,25 +56,38 @@ const AdminBooksPage = () => {
                 <th className="px-3 py-3 font-medium">Title</th>
                 <th className="px-3 py-3 font-medium">Author</th>
                 <th className="px-3 py-3 font-medium">Genre</th>
-                <th className="px-3 py-3 font-medium">Copies</th>
+                <th className="px-3 py-3 font-medium">Total Copies</th>
+                <th className="px-3 py-3 font-medium">Available Copies</th>
+                <th className="px-3 py-3 font-medium">Rating</th>
                 <th className="px-3 py-3 font-medium">Status</th>
               </tr>
             </thead>
-            <tbody>
-              {demoBooks.map((book) => (
+            <tbody className="overflow-x-scroll">
+              {books.map((book, index) => (
                 <tr
                   key={book.title}
-                  className="border-b border-white/5 text-light-100"
+                  className={cn(
+                    "text-light-100",
+                    index !== books.length - 1 && "border-b border-white/5",
+                  )}
                 >
                   <td className="px-3 py-3 font-medium text-white">
                     {book.title}
                   </td>
                   <td className="px-3 py-3 text-light-100/80">{book.author}</td>
                   <td className="px-3 py-3">{book.genre}</td>
-                  <td className="px-3 py-3">{book.copies}</td>
+                  <td className="px-3 py-3">{book.totalCopies}</td>
+                  <td className="px-3 py-3">{book.availableCopies}</td>
+                  <td className="px-3 py-3">{book.rating}</td>
                   <td className="px-3 py-3">
-                    <span className="rounded-full border border-primary-admin/40 bg-primary-admin/15 px-2.5 py-1 text-[11px] text-primary-admin">
-                      {book.status}
+                    <span
+                      className={`px-2.5 py-1 text-[11px] ${
+                        book.status === "IN_STOCK"
+                          ? "text-green-500"
+                          : "text-red-500"
+                      } text-center`}
+                    >
+                      {book.status === "IN_STOCK" ? "In Stock" : "Out of Stock"}
                     </span>
                   </td>
                 </tr>

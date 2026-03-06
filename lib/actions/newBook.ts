@@ -32,6 +32,9 @@ export const createNewBook = async (params: BookParams) => {
   } catch (error) {
     // biome-ignore lint/suspicious/noConsole: false positive
     console.log(error, "Error creating new book");
-    return { success: false, error: "Failed to create new book" };
+    return {
+      success: false,
+      error: `Failed to create new book`,
+    };
   }
 };
