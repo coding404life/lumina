@@ -92,7 +92,6 @@ const AddNewBookPage = () => {
               type="number"
               min={0}
               max={5}
-              step="0.1"
               placeholder="4.8"
               register={form.register}
               error={form.formState.errors.rating?.message}

@@ -19,18 +19,18 @@ const Header = ({ session }: { session: Session }) => {
   const pathname = usePathname();
 
   return (
-    <header className="glass-morphism mt-5 flex w-full justify-between items-center gap-5 px-6 py-3 rounded-2xl shadow-2xl">
+    <header className="glass-morphism mt-5 flex w-full justify-between items-center gap-1 sm:gap-5 px-1 sm:px-6 py-3 rounded-2xl shadow-2xl">
       <Link href="/">
         <div className="flex items-center gap-2">
           <Image src="/icons/knowledge.svg" alt="logo" width={32} height={32} />
-          <span className="font-bebas-neue text-lg sm:text-2xl text-white tracking-widest ">
+          <span className="font-bebas-neue text-sm sm:text-2xl text-white tracking-widest">
             LUMINA
           </span>
         </div>
       </Link>
 
-      <div className="flex items-center gap-4 sm:gap-10">
-        <ul className="flex flex-row items-center gap-4 sm:gap-8">
+      <div className="flex items-center gap-2 sm:gap-10">
+        <ul className="flex flex-row items-center gap-2 sm:gap-8">
           <li>
             <Link
               href="/library"
@@ -61,7 +61,7 @@ const Header = ({ session }: { session: Session }) => {
           )}
         </ul>
 
-        <div className="relative flex items-center gap-2 sm:gap-4 border-l border-white/10 pl-4 sm:pl-10">
+        <div className="relative flex items-center gap-2 sm:gap-4 border-l border-white/10 pl-2 sm:pl-10">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button

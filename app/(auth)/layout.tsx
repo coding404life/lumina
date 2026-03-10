@@ -45,7 +45,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
           alt="auth illustration"
           height={1000}
           width={1000}
-          className="size-full object-cover grayscale-[0.2] hover:grayscale-0 transition-all duration-700"
+          className="size-full object-cover grayscale-[0.2]"
         />
         <div className="absolute inset-x-0 bottom-0 p-20 z-20 bg-linear-to-t from-dark-100 via-transparent to-transparent">
           <h2 className="text-5xl font-bebas-neue text-white tracking-widest leading-tight mb-4">
