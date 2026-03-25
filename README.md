@@ -1,8 +1,8 @@
-# 🌟 Lumina: Digital Sanctuary for Knowledge
-
+ 
 Lumina is a premium, high-performance web application designed to be your ultimate digital sanctuary for knowledge management. Built with cutting-edge technologies, Lumina offers a seamless, beautiful, and secure experience for organizing and accessing your most important resources.
 
-![Lumina Homepage](./public/homepage-screenshot.png)
+ <img width="1333" height="1247" alt="SCR-20260323-gxfe" src="https://github.com/user-attachments/assets/1eaad6e5-0b7c-4826-b7e7-3a1bebd2fc77" />
+
 
 ## ✨ Features
 
